@@ -1,4 +1,4 @@
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.Hashtable" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -8,20 +8,19 @@
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
+<button onclick="history.back()">Go Back</button>
 <div class="main">
   <h2>Patients:</h2>
   <ul>
     <%
-      List<String> patients = (List<String>) request.getAttribute("patientNames");
-      for (String patient : patients)
+      Hashtable<String, String> patients = (Hashtable<String, String>) request.getAttribute("patientList");
+      for (String id : patients.keySet())
       {
-        String href = "dummypage.html";
+        String href = "patientData.html?id=" + id;
     %>
-    <li><a href="<%=href%>"><%=patient%></a>
-    </li>
+    <li><a href="<%=href%>"><%=id + " - " + patients.get(id)%></a></li>
     <% } %>
   </ul>
 </div>
-<jsp:include page="/footer.jsp"/>
 </body>
 </html>

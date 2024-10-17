@@ -1,4 +1,5 @@
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Hashtable" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -8,26 +9,30 @@
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
+<button onclick="history.back()">Go Back</button>
 <div class="main">
   <h1>Search Result</h1>
   <%
-    List<String> patients = (List<String>) request.getAttribute("result");
-    if (patients.size() !=0)
+    Hashtable<String,ArrayList<String>> data = (Hashtable<String, ArrayList<String>>) request.getAttribute("result");
+    if (data.size() !=0)
     {
     %>
     <ul>
       <%
-        for (String patient : patients)
+        for (String id : data.keySet())
         {
+          String href = "patientData.html?id=" + id;
       %>
-      <li><%=patient%></li>
+      <li><a href="<%=href%>"><%=id + " - " + data.get(id)%></a></li>
      <% }
     } else
     {%>
       <p>Nothing found</p>
   <%}%>
+      <li>
+        <a href="index.html">Main Page</a>
+      </li>
   </ul>
 </div>
-<jsp:include page="/footer.jsp"/>
 </body>
 </html>
